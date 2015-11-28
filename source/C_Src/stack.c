@@ -1,5 +1,5 @@
-#include<DoublyLinkedList.h>
-#include<stack.h>
+#include"DoublyLinkedList.h"
+#include"stack.h"
 #include<stdio.h>
 struct Stack{
 		int *arr;

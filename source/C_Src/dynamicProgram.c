@@ -1,6 +1,6 @@
-#include <dynamicPrgm.h>
+#include "dynamicPrgm.h"
 #include <stdio.h>
-#include <BinaryTree.h>
+#include "BinaryTree.h"
 int findMaxLIS(int arr[],int n){
 	
 	int *lis=(int *)malloc(sizeof(int)*n);

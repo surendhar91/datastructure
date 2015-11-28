@@ -1,5 +1,5 @@
-#include <queue.h>
-#include <SinglyLinkedList.h>
+#include "queue.h"
+#include "SinglyLinkedList.h"
 #include <stdio.h>
 //Start of Circular array Queue Creation process
 struct Queue{

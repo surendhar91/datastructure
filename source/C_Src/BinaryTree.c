@@ -1,11 +1,11 @@
 // dumb code with smart data structure is better than smart code with dumb data structure
-#include <queue.h>
-#include <stack.h>
-#include <SinglyLinkedList.h>
-#include <DoublyLinkedList.h>
+#include "queue.h"
+#include "stack.h"
+#include "SinglyLinkedList.h"
+#include "DoublyLinkedList.h"
 #include <stdio.h>
-#include <BinaryTree.h>
-#include <commonOperations.h>
+#include "BinaryTree.h"
+#include "commonOperations.h"
 #define MAX_Q_SIZE 500
 #define INT_MAX 100
 struct bnode* newBNode(int data)
@@ -285,7 +285,7 @@ int size(struct bnode* node)
 
  * 4) Height -> leaf to root path, [i.e leaf is at height 1]
  *
- * 	  Maximum number of nodes in a binary tree of height ‘h’ is (2^h) – 1.
+ * 	  Maximum number of nodes in a binary tree of height â€˜hâ€™ is (2^h) â€“ 1.
           Here height of a tree is maximum number of nodes on root to leaf path.
 
         Height of a leaf node is considered as 1.
@@ -465,8 +465,8 @@ struct DllNode* convertTreeToList(struct bnode* root)
      * Write a recursive function treeToList(Node root) that takes an ordered binary tree and rearranges the internal
      pointers to make a circular doubly linked list out of the tree nodes.
      *
-     * The”previous” pointers should be stored in the “small” field and the “next” pointers should be stored in the
-     “large” field.
+     * Theâ€�previousâ€� pointers should be stored in the â€œsmallâ€� field and the â€œnextâ€� pointers should be stored in the
+     â€œlargeâ€� field.
      *
      * The list should be arranged so that the nodes are in increasing order.
 
@@ -640,20 +640,20 @@ void convertTreeToChildremSuM(struct bnode* root)
      *
      * i.e., first change left and right children to hold the children sum property then change the parent node.
 
-            Let difference between node’s data and children sum be diff.
+            Let difference between nodeâ€™s data and children sum be diff.
 
-            diff = node’s children sum - node’s data
+            diff = nodeâ€™s children sum - nodeâ€™s data
 
             If diff is 0 then nothing needs to be done.
 
-            If diff > 0 ( node’s data is smaller than node’s children sum) increment the node’s data by diff.
+            If diff > 0 ( nodeâ€™s data is smaller than nodeâ€™s children sum) increment the nodeâ€™s data by diff.
 
-            If diff < 0 (node’s data is greater than the node's children sum) then increment one child’s data.
+            If diff < 0 (nodeâ€™s data is greater than the node's children sum) then increment one childâ€™s data.
              * We can choose to increment either left or right child if they both are not NULL.
              *
              * Let us always first increment the left child.
              *
-             * Incrementing a child changes the subtree’s children sum property
+             * Incrementing a child changes the subtreeâ€™s children sum property
              * 			so we need to change left subtree also.
              *
              * So we recursively increment the left child.
@@ -690,7 +690,7 @@ Now convert the root, we have to increment left subtree for converting the root.
 /     \       /      \
 14      5     1       30
 
-Please note the last step – we have incremented 8 to 19, and to fix the subtree we have incremented 3 to 14.
+Please note the last step â€“ we have incremented 8 to 19, and to fix the subtree we have incremented 3 to 14.
 */
     if(root == NULL || (root->left == NULL && root->right == NULL)) {
 	// for an internal node with 1 children, or a leaf node
@@ -725,8 +725,8 @@ int diameterOfTree(struct bnode* root)
      *
      * 	The diameter of a tree T is the ----largest [MAx]---- of the following quantities:
 
-    * the diameter of T’s left subtree
-    * the diameter of T’s right subtree
+    * the diameter of Tâ€™s left subtree
+    * the diameter of Tâ€™s right subtree
     * the longest path between leaves that goes through the root of T
     * (this can be computed from the heights of the subtrees of T)
      *   -- i.e height of left tree + height of right tree +1 [passing through]
@@ -907,13 +907,13 @@ void doubleTree(struct bnode* root)
      *
      * create a new duplicate for each node, and insert the duplicate as the left child of the original node.
 
-So the tree…
+So the treeâ€¦
 
 2
 / \
 1   3
 
-is changed to…
+is changed toâ€¦
 
    2
   / \
@@ -1409,11 +1409,11 @@ void connectNodePreOrderUtil(struct connNode* node)
      *
      * When we are at node p, we set the nextRight of its left and right children.
      *
-     * Since the tree is complete tree, nextRight of p’s left child (p->left->nextRight) will always be p’s right child,
-     * and nextRight of p’s right child (p->right->nextRight) will always be left child of p’s nextRight
+     * Since the tree is complete tree, nextRight of pâ€™s left child (p->left->nextRight) will always be pâ€™s right child,
+     * and nextRight of pâ€™s right child (p->right->nextRight) will always be left child of pâ€™s nextRight
      * (if p is not the rightmost node at its level).
 
-            If p is the rightmost node, then nextRight of p’s right child will be NULL.
+            If p is the rightmost node, then nextRight of pâ€™s right child will be NULL.
      *
      * */
     // Connects node at the same level
@@ -1440,9 +1440,9 @@ void connectNodePreOrderUtil(struct connNode* node)
      * When we are at node 4, we set the nextRight of its children which are 8 and 9
      * (the nextRight of 4 is already set as node 5). nextRight of 8 will simply be set as 9,
      * but nextRight of 9 will be set as NULL which is incorrect.
-     * We can’t set the correct nextRight, because when we set nextRight of 9,
+     * We canâ€™t set the correct nextRight, because when we set nextRight of 9,
      * we only have nextRight of node 4 and ancestors of node 4,
-     * we don’t have nextRight of nodes in right subtree of root.
+     * we donâ€™t have nextRight of nodes in right subtree of root.
      *
      * 9's next right should be 10
 
@@ -1799,9 +1799,9 @@ void iterativePreOrderTraversal(struct bnode* root)
     /*
      * 	1) Create an empty stack nodeStack and push root node to stack.
             2) Do following while nodeStack is not empty.
-                    ….a) Pop an item from stack and print it.
-                    ….b) Push right child of popped item to stack
-                    ….c) Push left child of popped item to stack
+                    â€¦.a) Pop an item from stack and print it.
+                    â€¦.b) Push right child of popped item to stack
+                    â€¦.c) Push left child of popped item to stack
      *
      * */
     pushBStack(&stack, root); // N
@@ -1868,7 +1868,7 @@ void insertNodeToCompleteBinaryTreeUsingList(struct bnode** root, int data, stru
 void createCompleteBinaryTreeUsingLinkedList()
 {
     /**
-     * A complete binary tree is a binary tree where each level ‘l’ except the last has 2^l nodes
+     * A complete binary tree is a binary tree where each level â€˜lâ€™ except the last has 2^l nodes
      * and the nodes at the last level are all left aligned.
      * Complete binary trees are mainly used in heap based data structures.
 
@@ -1904,7 +1904,7 @@ void createCompleteBinaryTreeUsingLinkedList()
      7
 
     Complete binary trees are generally represented using -----arrays-----.
-     * The array representation is better because it doesn’t contain any empty slot.
+     * The array representation is better because it doesnâ€™t contain any empty slot.
      * Given parent index i, its left child is given by 2 * i + 1
      * and its right child is given by 2 * i + 2.
      * So no extra space is wasted and space to store left and right pointers is saved.
@@ -3043,8 +3043,8 @@ in[] = {4, 8, 10, 12, 14, 20, 22};
 level[] = {20, 8, 22, 4, 12, 10, 14};
 
 In a Levelorder sequence, the first element is the root of the tree.
-So we know ’20’ is root for given sequences.
-* By searching ’20’ in Inorder sequence, we can find out all elements on left side of ‘20’ are in left subtree and
+So we know â€™20â€™ is root for given sequences.
+* By searching â€™20â€™ in Inorder sequence, we can find out all elements on left side of â€˜20â€™ are in left subtree and
 elements on right are in right subtree. So we know below structure now.
 
          20
@@ -3150,8 +3150,8 @@ Modified tree:
 3) Traverse the tree again inorder fashion.
 * While traversing the tree, one by one take elements from array and store elements from array to every
 * odd level traversed node.
-For the above example, we traverse ‘h’ first in above array and replace ‘h’ with ‘o’.
-* Then we traverse ‘i’ and replace it with n.
+For the above example, we traverse â€˜hâ€™ first in above array and replace â€˜hâ€™ with â€˜oâ€™.
+* Then we traverse â€˜iâ€™ and replace it with n.
      *
      * */
     if(root == NULL)

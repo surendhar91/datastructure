@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<math.h>
-#include<SegmentTree.h>
+#include"SegmentTree.h"
 /*
  * Introduction to Segment Tree:
  * 

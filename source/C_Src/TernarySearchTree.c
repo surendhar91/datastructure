@@ -1,4 +1,4 @@
-#include<TernarySearchTree.h>
+#include"TernarySearchTree.h"
 #include<stdio.h>
 //a ternary node must have five fields.
 struct ternaryNode{
