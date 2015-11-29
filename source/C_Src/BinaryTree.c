@@ -285,7 +285,7 @@ int size(struct bnode* node)
 
  * 4) Height -> leaf to root path, [i.e leaf is at height 1]
  *
- * 	  Maximum number of nodes in a binary tree of height â€˜hâ€™ is (2^h) â€“ 1.
+ * 	  Maximum number of nodes in a binary tree of height Ã¢â‚¬ËœhÃ¢â‚¬â„¢ is (2^h) Ã¢â‚¬â€œ 1.
           Here height of a tree is maximum number of nodes on root to leaf path.
 
         Height of a leaf node is considered as 1.
@@ -465,8 +465,8 @@ struct DllNode* convertTreeToList(struct bnode* root)
      * Write a recursive function treeToList(Node root) that takes an ordered binary tree and rearranges the internal
      pointers to make a circular doubly linked list out of the tree nodes.
      *
-     * Theâ€�previousâ€� pointers should be stored in the â€œsmallâ€� field and the â€œnextâ€� pointers should be stored in the
-     â€œlargeâ€� field.
+     * TheÃ¢â‚¬ï¿½previousÃ¢â‚¬ï¿½ pointers should be stored in the Ã¢â‚¬Å“smallÃ¢â‚¬ï¿½ field and the Ã¢â‚¬Å“nextÃ¢â‚¬ï¿½ pointers should be stored in the
+     Ã¢â‚¬Å“largeÃ¢â‚¬ï¿½ field.
      *
      * The list should be arranged so that the nodes are in increasing order.
 
@@ -517,7 +517,7 @@ void printPaths(struct bnode* root)
     printRootToLeafPaths(root, path, 0);
 }
 void printLevelOrderTraversal(struct bnode* root)
-{
+{//Doesn't print the tree line by line
     // O(n) Complexity.
     // use a queue for level order traversal.
     struct bQueue* queue = createBQueue(100);
@@ -640,20 +640,20 @@ void convertTreeToChildremSuM(struct bnode* root)
      *
      * i.e., first change left and right children to hold the children sum property then change the parent node.
 
-            Let difference between nodeâ€™s data and children sum be diff.
+            Let difference between nodeÃ¢â‚¬â„¢s data and children sum be diff.
 
-            diff = nodeâ€™s children sum - nodeâ€™s data
+            diff = nodeÃ¢â‚¬â„¢s children sum - nodeÃ¢â‚¬â„¢s data
 
             If diff is 0 then nothing needs to be done.
 
-            If diff > 0 ( nodeâ€™s data is smaller than nodeâ€™s children sum) increment the nodeâ€™s data by diff.
+            If diff > 0 ( nodeÃ¢â‚¬â„¢s data is smaller than nodeÃ¢â‚¬â„¢s children sum) increment the nodeÃ¢â‚¬â„¢s data by diff.
 
-            If diff < 0 (nodeâ€™s data is greater than the node's children sum) then increment one childâ€™s data.
+            If diff < 0 (nodeÃ¢â‚¬â„¢s data is greater than the node's children sum) then increment one childÃ¢â‚¬â„¢s data.
              * We can choose to increment either left or right child if they both are not NULL.
              *
              * Let us always first increment the left child.
              *
-             * Incrementing a child changes the subtreeâ€™s children sum property
+             * Incrementing a child changes the subtreeÃ¢â‚¬â„¢s children sum property
              * 			so we need to change left subtree also.
              *
              * So we recursively increment the left child.
@@ -690,7 +690,7 @@ Now convert the root, we have to increment left subtree for converting the root.
 /     \       /      \
 14      5     1       30
 
-Please note the last step â€“ we have incremented 8 to 19, and to fix the subtree we have incremented 3 to 14.
+Please note the last step Ã¢â‚¬â€œ we have incremented 8 to 19, and to fix the subtree we have incremented 3 to 14.
 */
     if(root == NULL || (root->left == NULL && root->right == NULL)) {
 	// for an internal node with 1 children, or a leaf node
@@ -725,8 +725,8 @@ int diameterOfTree(struct bnode* root)
      *
      * 	The diameter of a tree T is the ----largest [MAx]---- of the following quantities:
 
-    * the diameter of Tâ€™s left subtree
-    * the diameter of Tâ€™s right subtree
+    * the diameter of TÃ¢â‚¬â„¢s left subtree
+    * the diameter of TÃ¢â‚¬â„¢s right subtree
     * the longest path between leaves that goes through the root of T
     * (this can be computed from the heights of the subtrees of T)
      *   -- i.e height of left tree + height of right tree +1 [passing through]
@@ -907,13 +907,13 @@ void doubleTree(struct bnode* root)
      *
      * create a new duplicate for each node, and insert the duplicate as the left child of the original node.
 
-So the treeâ€¦
+So the treeÃ¢â‚¬Â¦
 
 2
 / \
 1   3
 
-is changed toâ€¦
+is changed toÃ¢â‚¬Â¦
 
    2
   / \
@@ -1409,11 +1409,11 @@ void connectNodePreOrderUtil(struct connNode* node)
      *
      * When we are at node p, we set the nextRight of its left and right children.
      *
-     * Since the tree is complete tree, nextRight of pâ€™s left child (p->left->nextRight) will always be pâ€™s right child,
-     * and nextRight of pâ€™s right child (p->right->nextRight) will always be left child of pâ€™s nextRight
+     * Since the tree is complete tree, nextRight of pÃ¢â‚¬â„¢s left child (p->left->nextRight) will always be pÃ¢â‚¬â„¢s right child,
+     * and nextRight of pÃ¢â‚¬â„¢s right child (p->right->nextRight) will always be left child of pÃ¢â‚¬â„¢s nextRight
      * (if p is not the rightmost node at its level).
 
-            If p is the rightmost node, then nextRight of pâ€™s right child will be NULL.
+            If p is the rightmost node, then nextRight of pÃ¢â‚¬â„¢s right child will be NULL.
      *
      * */
     // Connects node at the same level
@@ -1440,9 +1440,9 @@ void connectNodePreOrderUtil(struct connNode* node)
      * When we are at node 4, we set the nextRight of its children which are 8 and 9
      * (the nextRight of 4 is already set as node 5). nextRight of 8 will simply be set as 9,
      * but nextRight of 9 will be set as NULL which is incorrect.
-     * We canâ€™t set the correct nextRight, because when we set nextRight of 9,
+     * We canÃ¢â‚¬â„¢t set the correct nextRight, because when we set nextRight of 9,
      * we only have nextRight of node 4 and ancestors of node 4,
-     * we donâ€™t have nextRight of nodes in right subtree of root.
+     * we donÃ¢â‚¬â„¢t have nextRight of nodes in right subtree of root.
      *
      * 9's next right should be 10
 
@@ -1799,9 +1799,9 @@ void iterativePreOrderTraversal(struct bnode* root)
     /*
      * 	1) Create an empty stack nodeStack and push root node to stack.
             2) Do following while nodeStack is not empty.
-                    â€¦.a) Pop an item from stack and print it.
-                    â€¦.b) Push right child of popped item to stack
-                    â€¦.c) Push left child of popped item to stack
+                    Ã¢â‚¬Â¦.a) Pop an item from stack and print it.
+                    Ã¢â‚¬Â¦.b) Push right child of popped item to stack
+                    Ã¢â‚¬Â¦.c) Push left child of popped item to stack
      *
      * */
     pushBStack(&stack, root); // N
@@ -1868,7 +1868,7 @@ void insertNodeToCompleteBinaryTreeUsingList(struct bnode** root, int data, stru
 void createCompleteBinaryTreeUsingLinkedList()
 {
     /**
-     * A complete binary tree is a binary tree where each level â€˜lâ€™ except the last has 2^l nodes
+     * A complete binary tree is a binary tree where each level Ã¢â‚¬ËœlÃ¢â‚¬â„¢ except the last has 2^l nodes
      * and the nodes at the last level are all left aligned.
      * Complete binary trees are mainly used in heap based data structures.
 
@@ -1904,7 +1904,7 @@ void createCompleteBinaryTreeUsingLinkedList()
      7
 
     Complete binary trees are generally represented using -----arrays-----.
-     * The array representation is better because it doesnâ€™t contain any empty slot.
+     * The array representation is better because it doesnÃ¢â‚¬â„¢t contain any empty slot.
      * Given parent index i, its left child is given by 2 * i + 1
      * and its right child is given by 2 * i + 2.
      * So no extra space is wasted and space to store left and right pointers is saved.
@@ -3043,8 +3043,8 @@ in[] = {4, 8, 10, 12, 14, 20, 22};
 level[] = {20, 8, 22, 4, 12, 10, 14};
 
 In a Levelorder sequence, the first element is the root of the tree.
-So we know â€™20â€™ is root for given sequences.
-* By searching â€™20â€™ in Inorder sequence, we can find out all elements on left side of â€˜20â€™ are in left subtree and
+So we know Ã¢â‚¬â„¢20Ã¢â‚¬â„¢ is root for given sequences.
+* By searching Ã¢â‚¬â„¢20Ã¢â‚¬â„¢ in Inorder sequence, we can find out all elements on left side of Ã¢â‚¬Ëœ20Ã¢â‚¬â„¢ are in left subtree and
 elements on right are in right subtree. So we know below structure now.
 
          20
@@ -3150,8 +3150,8 @@ Modified tree:
 3) Traverse the tree again inorder fashion.
 * While traversing the tree, one by one take elements from array and store elements from array to every
 * odd level traversed node.
-For the above example, we traverse â€˜hâ€™ first in above array and replace â€˜hâ€™ with â€˜oâ€™.
-* Then we traverse â€˜iâ€™ and replace it with n.
+For the above example, we traverse Ã¢â‚¬ËœhÃ¢â‚¬â„¢ first in above array and replace Ã¢â‚¬ËœhÃ¢â‚¬â„¢ with Ã¢â‚¬ËœoÃ¢â‚¬â„¢.
+* Then we traverse Ã¢â‚¬ËœiÃ¢â‚¬â„¢ and replace it with n.
      *
      * */
     if(root == NULL)
@@ -3308,14 +3308,14 @@ int findClosestLeafNodeAmongAncestorsAlso(struct bnode* root,int key,struct bnod
 				res = getMin(res,index-i+closestDistToLeaf(ancestors[i]));
 				/*
 				 * 	   A
-					/    \    
-				  B       C
-						/   \  
-					   E     F   
-					  /       \
-					 G         H
-					/ \       /
-				   I   J     K
+					 /    \    
+                                        B       C
+					     /   \  
+					    E     F   
+					   /       \
+					  G         H
+					 / \       /
+                                        I   J     K
 
 	Closest leaf to 'H' is 'K', so distance is 1 for 'H'
 	Closest leaf to 'C' is 'B', so distance is 2 for 'C'
@@ -3336,10 +3336,130 @@ int findClosestLeafNodeAmongAncestorsAlso(struct bnode* root,int key,struct bnod
 		findClosestLeafNodeAmongAncestorsAlso(root->right,key,ancestors,index+1));
 	
 }
+void printSpecificLevelOrder(struct bnode* root){
+   
+    /*
+     i.e.Given a perfect binary tree,
+     *  print nodes in level order but nodes should be from left and right side alternatively. Here 1st and 2nd levels are trivial.
+    While 3rd level: 4(left), 7(right), 5(left), 6(right) are printed.
+    While 4th level: 8(left), 15(right), 9(left), 14(right), .. are printed.
+    While 5th level: 16(left), 31(right), 17(left), 30(right), .. are printed.
+    */
+    
+    /*
+     The standard level order traversal idea will slightly change here. Instead of processing ONE node at a time, 
+     * we will process TWO nodes at a time. And while pushing children into queue,
+     * the enqueue order will be: 1st node’s left child, 2nd node’s right child, 1st node’s right child and 2nd node’s left child.
+     */
+    if(root==NULL)
+        return ;
+    printf("%d ",root->data);
+    
+    if(root->left==NULL){
+        return ;
+    }else{
+        printf("%d %d ", root->left->data, root->right->data);
+    }
+    
+    struct bQueue* queue = createBQueue(70);
+    
+    //We are going to process two nodes, root->left->left , then root->right->right
+    enqueueBNode(queue,root->left);
+    enqueueBNode(queue,root->right);
+    
+    while(queue->size!=0){//unless the queue is empty
+       
+        struct bnode* leftNode = dequeueBNode(queue);
+        struct bnode* rightNode = dequeueBNode(queue);
+        
+        printf("%d %d ",leftNode->left->data,rightNode->right->data);
+        printf("%d %d ",leftNode->right->data,rightNode->left->data);//if we are printing backwards, then these elements can be pushed to stack
+        
+        if(leftNode->left->left!=NULL){//given it's a perfect binary tree, we are not searching for rightNode
+            enqueueBNode(queue,leftNode->left);
+            enqueueBNode(queue,rightNode->right);
+            enqueueBNode(queue,leftNode->right);
+            enqueueBNode(queue,rightNode->left);
+        }
+    }
 
-//converting binary tree to threaded binary tree
+}
+void convertLeftRightToDownRight(struct bnode* root){
+    /*
+     * Given a binary tree in left-right representation as below
 
+                               1
+                            /    \
+                           2	  3
+                               /    \
+                              4      5
+                             /     /   \
+                            6    7      8 
 
+Convert the structure of the tree to down-right representation like the below tree.
+
+                        1
+                        |
+                        2 – 3
+                            |
+                            4 — 5
+                            |   |
+                            6   7 – 8 
+
+The conversion should happen in-place, 
+     * 
+     * i.e., left child pointer should be used as down pointer and right child pointer should be used as right sibling pointer.
+     */
+    if(root==NULL) return ;//Base Case
+    
+    //First the child should be processed, If we were to process parent first, then we may not have the pointer to right subtre.
+    convertLeftRightToDownRight(root->left);
+    convertLeftRightToDownRight(root->right);
+
+    if(root->left==NULL)
+        root->left = root -> right; //point left pointer to the sibling
+    else{
+        root->left->right = root->right;//Child's right pointer should point to the sibling.
+    }
+    root->right = NULL; //set the right pointer to NULL.
+}
+
+void downRightTraversal(struct bnode *root) {
+    if (root != NULL) {
+        printf("%d ",root->data);
+        downRightTraversal(root->right);//This will be ignored for the second level. 
+        //For third level onwards, Left right will be recursively processed.
+        downRightTraversal(root->left);
+    }
+}
+void printLevelOrderByLine(struct bnode* root){
+    
+    struct bQueue* queue = createBQueue(100);
+    if(root==NULL) return ;
+    
+    enqueueBNode(queue,root);
+    
+    while(1){
+        
+        int currLevelCount = queue->size;//for this level, number of nodes.
+        if(currLevelCount==0){
+            break ; //if the queue is empty then break from the loop.
+        }
+        while(currLevelCount>0){
+            struct bnode* curr = dequeueBNode(queue);
+            printf("%d ",curr->data);
+            if(curr->left!=NULL){
+                enqueueBNode(queue,curr->left);
+            }
+            if(curr->right!=NULL) {
+                enqueueBNode(queue, curr->right);
+            }
+            currLevelCount--;//Important
+        }
+        //end of the level
+        printf("\n");
+    }
+}
 //-------------------- End of Function Definitions----------------------//
 
 //-------------------- Start of Test Data Methods-----------------------//
@@ -4677,9 +4797,94 @@ void findClosestLeafNodeAmongAncestorsAlsoTestData(){
     printf("\nDistace of the closest key from %c is %d",k,findClosestLeafNodeTestData(root, k));
 	
 }
+void printSpecificLevelOrderTestData(){
+
+    //Perfect Binary Tree of Height 4
+    struct bnode *root = newBNode(1);
+
+    root->left = newBNode(2);
+    root->right = newBNode(3);
+
+    root->left->left = newBNode(4);
+    root->left->right = newBNode(5);
+    root->right->left = newBNode(6);
+    root->right->right = newBNode(7);
+
+    root->left->left->left = newBNode(8);
+    root->left->left->right = newBNode(9);
+    root->left->right->left = newBNode(10);
+    root->left->right->right = newBNode(11);
+    root->right->left->left = newBNode(12);
+    root->right->left->right = newBNode(13);
+    root->right->right->left = newBNode(14);
+    root->right->right->right = newBNode(15);
+
+    root->left->left->left->left = newBNode(16);
+    root->left->left->left->right = newBNode(17);
+    root->left->left->right->left = newBNode(18);
+    root->left->left->right->right = newBNode(19);
+    root->left->right->left->left = newBNode(20);
+    root->left->right->left->right = newBNode(21);
+    root->left->right->right->left = newBNode(22);
+    root->left->right->right->right = newBNode(23);
+    root->right->left->left->left = newBNode(24);
+    root->right->left->left->right = newBNode(25);
+    root->right->left->right->left = newBNode(26);
+    root->right->left->right->right = newBNode(27);
+    root->right->right->left->left = newBNode(28);
+    root->right->right->left->right = newBNode(29);
+    root->right->right->right->left = newBNode(30);
+    root->right->right->right->right = newBNode(31);
+
+    printf("Specific Level Order traversal of binary tree is \n");
+    printSpecificLevelOrder(root);
+
+
+}
+void convertLeftRightToDownRightTestData() {
+    // Let us create binary tree shown in above diagram
+    /*
+           1
+         /   \
+        2     3
+             / \
+            4   5
+           /   /  \
+          6   7    8
+     */
+    struct bnode *root = newBNode(1);
+    root->left = newBNode(2);
+    root->right = newBNode(3);
+    root->right->left = newBNode(4);
+    root->right->right = newBNode(5);
+    root->right->left->left = newBNode(6);
+    root->right->right->left = newBNode(7);
+    root->right->right->right = newBNode(8);
+
+    convertLeftRightToDownRight(root);
+
+    printf("Traversal of the tree converted to down-right form\n");
+    downRightTraversal(root);
+    
+}
+void printLevelOrderByLineTestData() {
+    // Let us create binary tree shown in above diagram
+    struct bnode *root = newBNode(1);
+    root->left = newBNode(2);
+    root->right = newBNode(3);
+    root->left->left = newBNode(4);
+    root->left->right = newBNode(5);
+    root->right->right = newBNode(6);
+
+    printLevelOrderByLine(root);
+
+}
 void binaryTreeTestData()
 {
-	findClosestLeafNodeAmongAncestorsAlsoTestData();
+    printLevelOrderByLineTestData();
+//    convertLeftRightToDownRightTestData();
+//    printSpecificLevelOrderTestData();
+//	findClosestLeafNodeAmongAncestorsAlsoTestData();
 	//	printNodesBetweenTwoLevelTestData();
 	//	serializeBTreeAndDeserializeTestData();
 	//	checkIfNodesAreCousinTestData();

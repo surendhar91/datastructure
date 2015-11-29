@@ -1,7 +1,7 @@
 #include<map>
 #include<vector>
 #include<stdlib.h>
-#include<binaryTreeImp.h>
+#include"binaryTreeImp.h"
 #include<queue>
 using namespace std;
 struct treeNode{
@@ -169,7 +169,7 @@ void inorderUsingThreadedTree(struct thbnode* root){
 	
 }
 void LCATestData(){
-	 struct treeNode * root = createTreeNode(1);
+    struct treeNode * root = createTreeNode(1);
     root->left = createTreeNode(2);
     root->right = createTreeNode(3);
     root->left->left = createTreeNode(4);
