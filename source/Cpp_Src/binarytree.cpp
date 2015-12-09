@@ -146,6 +146,143 @@ void convertBinaryTreeToThreadedTree(struct thbnode* root,queue<struct thbnode *
 		root->isThreaded = true;
 	}
 }
+
+struct RandNode{
+    int data;
+    struct RandNode *left,*right,*random;
+};
+
+RandNode* createRandNode(int data){
+    RandNode* newNode = new RandNode;//just like class we can create this..
+    newNode->data=data;
+    newNode->left = newNode->right = newNode->random = NULL;
+    return newNode;
+}
+
+RandNode* copyLeftRightNode(RandNode* treeNode){
+    
+    if(treeNode==NULL)
+        return NULL;
+    RandNode* orgLeftNode   = treeNode->left; //A --> B B is the left node
+    //Always treeNode->left will point to the clone node hereafter.
+    treeNode->left          = createRandNode(treeNode->data);//A --> CA [A is the treeNode clone the node as CA and make it as left]]
+    treeNode->left->left    = orgLeftNode; // A--> CA --> B
+    
+    if(orgLeftNode!=NULL){//only if the org left node exists, we have to proceed
+        orgLeftNode->left = copyLeftRightNode(orgLeftNode);//do the copyLeftRightNode recursively for the tree below..
+        //Proceed for B's left.. 
+    }
+    treeNode->left->right    = copyLeftRightNode(treeNode->right);//The cloned CA now has to point to CC..
+    //Clone->right = treeNode->right [Means do the same for the right subtree..]
+    return treeNode->left; //The clone node
+    
+
+}
+
+void copyRandPointers(RandNode* treeNode, RandNode* cloneNode){
+
+    if(treeNode==NULL)
+        return ;
+    
+    if(treeNode->random!=NULL){
+        cloneNode->random = treeNode->random->left; //Here left means the cloned node. [which is random again..]
+    }else{
+        cloneNode->random = NULL;
+    }
+    
+    if(treeNode->left!=NULL&&cloneNode->left!=NULL){//Ensures the cloneNode exists first and the left element of tree node exists.
+        //treeNode->left is CA
+        //cloneNode->left is B
+        copyRandPointers(treeNode->left->left,cloneNode->left->left);//Move down the tree.
+        // B and CB 
+    }
+    // C and CC
+    copyRandPointers(treeNode->right,cloneNode->right);
+    
+}
+void restoreTreeLeftNode(RandNode* treeNode, RandNode* cloneNode){
+    if(treeNode==NULL)
+        return ;
+    if(cloneNode->left){
+        RandNode* orgNode = cloneNode->left;//B
+        RandNode* cloneLeft = orgNode->left;
+        treeNode->left  = treeNode->left->left;//go to the next node down..
+        cloneNode->left = cloneLeft;//go to the next clone node down..
+    }else{
+        treeNode->left  = NULL;
+    }
+    restoreTreeLeftNode(treeNode->left,cloneNode->left);
+    restoreTreeLeftNode(treeNode->right,cloneNode->right);
+
+}
+RandNode* cloneTree(RandNode* treeNode)
+{
+    if(treeNode==NULL)
+        return NULL;
+    RandNode* cloneNode = copyLeftRightNode(treeNode);
+    copyRandPointers(treeNode,cloneNode);
+    restoreTreeLeftNode(treeNode,cloneNode);
+    
+    return cloneNode;
+}
+void printInOrderRandNode(RandNode* node){
+    if(node==NULL)
+        return ;
+    //LNR
+    printInOrderRandNode(node->left);
+    
+    /* then print data of Node and its random */
+    cout<<"["<<node->data<<" ";
+    if(node->random==NULL)
+        cout<<"NULL";
+    else
+        cout<<node->random->data;
+    cout<<"], ";
+
+    printInOrderRandNode(node->right);
+}
+void cloneTreeTestData(){
+    RandNode *tree = createRandNode(10);
+    RandNode *n2 = createRandNode(6);
+    RandNode *n3 = createRandNode(12);
+    RandNode *n4 = createRandNode(5);
+    RandNode *n5 = createRandNode(8);
+    RandNode *n6 = createRandNode(11);
+    RandNode *n7 = createRandNode(13);
+    RandNode *n8 = createRandNode(7);
+    RandNode *n9 = createRandNode(9);
+    tree->left = n2;
+    tree->right = n3;
+    tree->random = n2;
+    n2->left = n4;
+    n2->right = n5;
+    n2->random = n8;
+    n3->left = n6;
+    n3->right = n7;
+    n3->random = n5;
+    n4->random = n9;
+    n5->left = n8;
+    n5->right = n9;
+    n5->random = tree;
+    n6->random = n9;
+    n9->random = n8;
+
+    /*  Test No 7
+        Node *tree = newNode(1);
+        tree->left = newNode(2);
+        tree->right = newNode(3);
+        tree->left->random = tree;
+        tree->right->random = tree->left;
+     */
+    cout << "Inorder traversal of original binary tree is: \n";
+    printInOrderRandNode(tree);
+
+    RandNode *clone = cloneTree(tree);
+
+    cout << "\n\nInorder traversal of cloned binary tree is: \n";
+    printInOrderRandNode(clone);
+    
+}
 struct thbnode* leftMost(struct thbnode *root){
 	
 	while(root!=NULL&&root->left!=NULL)//root->left is left tree..
@@ -158,7 +295,7 @@ void inorderUsingThreadedTree(struct thbnode* root){
 	else{
 		struct thbnode* cur = leftMost(root);
 		while(cur!=NULL){
-		printf("%d ",cur->data);//Left most
+		cout<<cur->data;//Left most
 		if(cur->isThreaded)//threaded means, no right pointer, hence pointing to inorder successor
 			cur=cur->right;// Traverse to inorder successor,means N
 		else{
@@ -168,6 +305,7 @@ void inorderUsingThreadedTree(struct thbnode* root){
 		}
 	
 }
+
 void LCATestData(){
     struct treeNode * root = createTreeNode(1);
     root->left = createTreeNode(2);
@@ -206,5 +344,6 @@ void convertBinaryTreeToThreadedTreeTestData(){
 void binaryTreeTestData(){
 //	verticalSuMBinaryTreeTestData();
 //	LCATestData();
-convertBinaryTreeToThreadedTreeTestData();
+//convertBinaryTreeToThreadedTreeTestData();
+    cloneTreeTestData();
 }
