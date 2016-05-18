@@ -5,9 +5,10 @@ int main(int argc, char **argv)
 {
 	//printf("hello world\n");
 	//singlyLinkedListTestData();
-	//stackTestData();
+	stackTestData();
 //	queueTestData();
-	binaryTreeTestData();
+//	binaryTreeTestData();
+//        binarySearchTreeTestData();
 //	ternarySearchTreeTestData();
 //	dynamicProgrammingTestData();
 //	segTreeTestData();

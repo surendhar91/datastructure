@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include"binaryTreeImp.h"
 #include<queue>
+#include<stack>
 using namespace std;
 struct treeNode{
 	int data;
@@ -242,6 +243,23 @@ void printInOrderRandNode(RandNode* node){
     printInOrderRandNode(node->right);
 }
 void cloneTreeTestData(){
+    /*
+     Method 2 (Temporarily Modify the Given Binary Tree)
+
+    1. Create new nodes in cloned tree and insert each new node in original tree between the left pointer edge of corresponding node 
+     * in the original tree (See the below image).
+    i.e. if current node is A and it’s left child is B ( A — >> B ), 
+     * then new cloned node with key A wil be created (say cA) and it will be put as A — >> cA — >> B (B can be a NULL or a non-NULL left child). Right child pointer will be set correctly i.e. if for current node A, right child is C in original tree (A — >> C) then corresponding cloned nodes cA and cC will like cA —- >> cC
+
+    Binary_Tree(1)
+
+    2. Set random pointer in cloned tree as per original tree
+    i.e. if node A’s random pointer points to node B, then in cloned tree, 
+     * cA will point to cB (cA and cB are new node in cloned tree corresponding to node A and B in original tree)
+
+    3. Restore left pointers correctly in both original and cloned tree
+     
+     */
     RandNode *tree = createRandNode(10);
     RandNode *n2 = createRandNode(6);
     RandNode *n3 = createRandNode(12);
@@ -305,7 +323,41 @@ void inorderUsingThreadedTree(struct thbnode* root){
 		}
 	
 }
+bool iterativeSearchLevelOrder(struct treeNode* root, int data){
+    
+    queue<struct treeNode *> que;
+    que.push(root);
+    while(!que.empty()){
+        struct treeNode* curr = que.front();
+        que.pop();
+        if(curr->data==data)
+            return true;
+        if(curr->left)
+            que.push(curr->left);
+        if(curr->right)
+            que.push(curr->right);
+    
+    }
+    return false;
 
+}
+bool iterativeSearchPreOrder(struct treeNode* root,int data){
+    
+    stack<struct treeNode *> stak;
+    stack.push(root);
+    while(!stak.empty()){
+        struct treeNode* curr = stak.top();
+        stack.pop();
+        if(curr->data==data)
+            return true;
+        if(curr->right)
+            stack.push(curr->right);
+        if(curr->left)
+            stack.push(curr->left);
+    }
+    return false;
+
+}
 void LCATestData(){
     struct treeNode * root = createTreeNode(1);
     root->left = createTreeNode(2);
@@ -339,6 +391,21 @@ void convertBinaryTreeToThreadedTreeTestData(){
  
     cout << "Inorder traversal of creeated threaded tree is\n";
     inorderUsingThreadedTree(root);
+}
+
+void iterativeSearchTestData() {
+    struct treeNode *NewRoot = NULL;
+    struct treeNode *root = createTreeNode(2);
+    root->left = createTreeNode(7);
+    root->right = createTreeNode(5);
+    root->left->right = createTreeNode(6);
+    root->left->right->left = createTreeNode(1);
+    root->left->right->right = createTreeNode(11);
+    root->right->right = createTreeNode(9);
+    root->right->right->left = createTreeNode(4);
+
+    iterativeSearchLevelOrder(root, 6) ? cout << "Found\n" : cout << "Not Found\n";
+    iterativeSearchPreOrder(root, 12) ? cout << "Found\n" : cout << "Not Found\n";
 }
 // Driver program to test above function
 void binaryTreeTestData(){

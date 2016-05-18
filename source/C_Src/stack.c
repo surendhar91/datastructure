@@ -85,7 +85,7 @@ int infixToPostfix(char *exp){
 				if(!isEmpty(stack)&&peek(stack)!='('){
 					return -1;//This check ensures, the top element is '(', if it is then pop the stack.
 				}else{
-					pop(stack);
+					pop(stack);//remove the '(' element.
 				}
 				
 			}else {
@@ -95,7 +95,7 @@ int infixToPostfix(char *exp){
 					//only higher can be placed.
 					//imagine pile of plates, only large sized plates can be placed over the smaller ones.
 					}
-					pushStack(stack,exp[i]);
+					pushStack(stack,exp[i]);//then place the lower element..
 			}
 					
 			
@@ -216,11 +216,44 @@ int areParenthesisBalanced(char *exp){
 	}
 }
 void findNextGreaterElement(int arr[],int  n){
+    /*
+     Given an array, print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the first greater element on the right side of x in array. Elements for which no greater element exist, consider next greater element as -1.
+
+    Examples:
+    a) For any array, rightmost element always has next greater element as -1.
+    b) For an array which is sorted in decreasing order, all elements have next greater element as -1.
+    c) For the input array [4, 5, 2, 25}, the next greater elements for each element are as follows.
+
+Element       NGE
+   4      -->   5
+   5      -->   25
+   2      -->   25
+   25     -->   -1
+
+d) For the input array [13, 7, 6, 12}, the next greater elements for each element are as follows.
+
+  Element        NGE
+   13      -->    -1
+   7       -->     12
+   6       -->     12
+   12     -->     -1
+
+     * Algorithm:-
+ 1) Push the first element to stack.
+2) Pick rest of the elements one by one and follow following steps in loop.
+….a) Mark the current element as next.
+….b) If stack is not empty, then pop an element from stack and compare it with next.
+….c) If next is greater than the popped element, then next is the next greater element for the popped element.
+….d) Keep popping from the stack while the popped element is smaller than next. next becomes the next greater element for all such popped elements
+….g) If next is smaller than the popped element, then push the popped element back.
+3) After the loop in step 2 is over, pop all the elements from stack and print -1 as next element for them.
+     
+     */
 	//Finds the next greater element using stack
 	int i,next,element;
 	struct Stack* stack=createStack(n);
 	for(i=0;i<n;i++){
-		next=arr[i];
+		next=arr[i];//next is the element in the current loop
 		if(!isEmpty(stack)){
 			//Before pushing the current element
 			element=pop(stack);
@@ -529,6 +562,21 @@ c)
  * merge(): Links the top (next of last) of second list to the top (next of last) of first list. And makes last of second list as last of whole list.
 */
 }
+void createStackUsingQueues() {
+    /*
+     push(s, x) 
+     * // x is the element to be pushed and s is stack
+      1) Enqueue x to q2
+      2) One by one dequeue everything from q1 and enqueue to q2.
+      3) Swap the names of q1 and q2 
+     * // Swapping of names is done to avoid one more movement of all elements 
+     * // from q2 to q1. 
+
+    pop(s)
+      1) Dequeue an item from q1 and return it.
+ */
+
+}
 void dllStackTestData(){
 	struct DllStack *ms = (struct DllStack*)malloc(sizeof(struct DllStack));
 	ms->count=0;
@@ -636,13 +684,13 @@ void evaluatePostFixTestData(){
     return 0;
 }
 void stackTestData(){
-	kStackTestData();
+//	kStackTestData();
 //	mergeableStackTestData();
 //	dllStackTestData();
 //	specialStackTestData();
 //	calculateSpanTestData();
 	//reverseStackTestData();
-	//printNextGreaterTestData();
+	printNextGreaterTestData();
 	//paranthesisBalancedTestData();
 	//stackCreationTestData();
 	//infixToPostfixTestData();

@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include "BinaryTree.h"
 #include "commonOperations.h"
+#include <stdlib.h>
 #define MAX_Q_SIZE 500
 #define INT_MAX 100
 struct bnode* newBNode(int data)
 {
-    struct bnode* node = malloc(sizeof(struct bnode));
+    struct bnode* node = (struct bnode *)malloc(sizeof(struct bnode));
     node->data = data;
     node->left = NULL;
     node->right = NULL;
@@ -26,7 +27,7 @@ struct bQueue {
 
 struct bQueue* createBQueue(unsigned capacity)
 {
-    struct bQueue* queue = malloc(sizeof(struct bQueue));
+    struct bQueue* queue = (struct bQueue *)malloc(sizeof(struct bQueue));
     queue->front = 0;
     queue->rear = capacity - 1;
     queue->size = 0;
@@ -58,7 +59,7 @@ struct bnode* dequeueBNode(struct bQueue* queue)
     queue->size -= 1;
     return item;
 }
-int isCompleteBT(struct node* root)
+int isCompleteBT(struct bnode* root)
 {
 
     // Defn:A complete binary tree is a binary tree in which every level,
@@ -3460,6 +3461,124 @@ void printLevelOrderByLine(struct bnode* root){
         printf("\n");
     }
 }
+struct bnode* removeHalfNodes(struct bnode* root){
+    //Half nodes are the ones which has only one child [be it a left or right child]
+    //Leaves are exempted from the half nodes
+    
+    if(root==NULL)
+        return root;
+    
+    //to remove half nodes, we are going to make use of post order traversal
+    //i.e. Left and right has to be traversed first, then the node
+    root->left = removeHalfNodes(root->left);
+    root->right = removeHalfNodes(root->right);
+
+    if(root->left==NULL&&root->right==NULL){
+        return root; //don't touch the leaf node.
+    }
+    
+    if(root->left==NULL){
+        struct bnode* newRoot = root->right;
+        free(root);
+        return newRoot;
+    }
+    
+    if(root->right==NULL){
+        struct bnode* newRoot = root->left;
+        free(root);
+        return newRoot;
+    }
+    
+    return root;
+}
+int checkIfBinaryTreeIsFull(struct bnode* root){
+    //A full binary tree where in the nodes will either have two children or no children at all.
+    if(root==NULL)
+        return 0;
+    if(root->left==NULL&&root->right==NULL)
+        return 1;
+    
+    if((root->left&&root->right))
+        return checkIfBinaryTreeIsFull(root->left)&&checkIfBinaryTreeIsFull(root->right);
+    
+    return 0;
+}
+int sumOfAllLeftLeavesInATree(struct bnode* root){
+    int res=0;
+    if(root!=NULL){
+        if(isLeafNode(root->left)){//if the left element of root is a leaf node, then add it to the result
+            res += root->left->data;
+        }else{
+            res += sumOfAllLeftLeavesInATree(root->left);
+        }
+        res += sumOfAllLeftLeavesInATree(root->right); 
+    }
+    return res;
+}
+struct bnode* removeShortPathNodes(struct bnode* root, int level, int k){
+    //remove the nodes whose path length is less than k.
+    //Do post order traversal
+    if(root==NULL)
+        return NULL;
+    root->left = removeShortPathNodes(root->left,level+1,k);
+    root->right = removeShortPathNodes(root->right,level+1,k);
+    
+    if(!root->left&&!root->right&&level<k){
+        free(root);
+        return NULL;
+    }
+    return root;
+}
+int findMaxInBinaryTree(struct bnode* root){
+    //Max in a binary tree will the max (curr, curr->left, curr->right )
+    int lmax, rmax;
+    if(root==NULL){
+        return 0;
+    }
+    lmax = findMaxInBinaryTree(root->left);
+    rmax = findMaxInBinaryTree(root->right);
+    int max = root->data;
+    if(lmax>max){
+        max = lmax;
+    }
+    if(rmax>max){
+        max = rmax;
+    }
+    return max;
+}
+int findMaxPathSuMInBinaryTree(struct bnode* root,int *res){
+    /*
+     For each node there can be four ways that the max path goes through the node:
+    1. Node only
+    2. Max path through Left Child + Node
+    3. Max path through Right Child + Node
+    4. Max path through Left Child + Node + Max path through Right Child
+
+    The idea is to keep trace of four paths and pick up the max one in the end. An important thing to note is, 
+    root of every subtree need to return maximum path sum such that at most one child of root is involved. This is needed for parent function call. In below code, this sum is stored in ‘max_single’ and returned by the recursive function.
+     
+     */
+    if(root==NULL)
+        return ;
+    int l = findMaxPathSuMInBinaryTree(root->left, res);
+    int r = findMaxPathSuMInBinaryTree(root->right, res);
+    
+    int max_single = max(max(l,r)+root->data,root->data);//Either through the node, or point 2 and 3
+    //this is for the parent call
+    // given a tree   2
+    //              22  3  -> gets the max of this tree -> 24 is the highest path found in this tree, this will be returned
+    
+    
+    // extending to the tree  10 -> l is 24
+    //                     2
+    //                22     3
+    
+    int max_top    = max(max_single, l+r+root->data);//point 4
+    
+    *res = max(*res,max_top);
+    
+    return max_single;//returns max find for this tree.
+}
 //-------------------- End of Function Definitions----------------------//
 
 //-------------------- Start of Test Data Methods-----------------------//
@@ -4744,7 +4863,7 @@ void serializeBTreeAndDeserializeTestData(){
     if (fp == NULL)
     {
         puts("Could not open file");
-        return 0;
+        return ;
     }
     serializeBTree(root, fp);
     fclose(fp);
@@ -4879,9 +4998,122 @@ void printLevelOrderByLineTestData() {
     printLevelOrderByLine(root);
 
 }
+void removeHalfNodesTestData() {
+    struct bnode* NewRoot = NULL;
+    struct bnode *root = newBNode(2);
+    root->left = newBNode(7);
+    root->right = newBNode(5);
+    root->left->right = newBNode(6);
+    root->left->right->left = newBNode(1);
+    root->left->right->right = newBNode(11);
+    root->right->right = newBNode(9);
+    root->right->right->left = newBNode(4);
+
+    printf("Inorder traversal of given tree \n");
+    printInOrder(root);
+
+    NewRoot = removeHalfNodes(root);
+
+    printf("\nInorder traversal of the modified tree \n");
+    printInOrder(NewRoot);
+}
+void isFullBinaryTreeTestData(){
+    struct bnode* root = NULL;
+    root = newBNode(10);
+    root->left = newBNode(20);
+    root->right = newBNode(30);
+
+    root->left->right = newBNode(40);
+    root->left->left = newBNode(50);
+    root->right->left = newBNode(60);
+    root->right->right = newBNode(70);
+
+    root->left->left->left = newBNode(80);
+    root->left->left->right = newBNode(90);
+    root->left->right->left = newBNode(80);
+    root->left->right->right = newBNode(90);
+    root->right->left->left = newBNode(80);
+    root->right->left->right = newBNode(90);
+    root->right->right->left = newBNode(80);
+    root->right->right->right = newBNode(90);
+
+    if (checkIfBinaryTreeIsFull(root))
+        printf("The Binary Tree is full\n");
+    else
+        printf("The Binary Tree is not full\n");
+
+}
+
+void sumOfAllLeftLeavesTestData(){
+    
+    // Let us construct the Binary Tree shown in the
+    // above figure
+    struct bnode *root = newBNode(20);
+    root->left = newBNode(9);
+    root->right = newBNode(49);
+    root->right->left = newBNode(23);
+    root->right->right = newBNode(52);
+    root->right->right->left = newBNode(50);
+    root->left->left = newBNode(5);
+    root->left->right = newBNode(12);
+    root->left->right->right = newBNode(12);
+    printf("Sum of left leaves is %d "
+            ,sumOfAllLeftLeavesInATree(root));
+}
+void removeNodesOfShorterPathLengthTestData(){
+    int k = 4;
+    struct bnode *root = newBNode(1);
+    root->left = newBNode(2);
+    root->right = newBNode(3);
+    root->left->left = newBNode(4);
+    root->left->right = newBNode(5);
+    root->left->left->left = newBNode(7);
+    root->right->right = newBNode(6);
+    root->right->right->left = newBNode(8);
+    printf("Inorder Traversal of Original tree");
+    printInOrder(root);
+    printf("Inorder Traversal of Modified tree");
+    struct bnode *res = removeShortPathNodes(root,1,k);
+    printInOrder(res);
+
+}
+void findMaxInBinaryTreeTestData(){
+    struct bnode *NewRoot = NULL;
+    struct bnode *root = newBNode(2);
+    root->left = newBNode(7);
+    root->right = newBNode(5);
+    root->left->right = newBNode(6);
+    root->left->right->left = newBNode(1);
+    root->left->right->right = newBNode(11);
+    root->right->right = newBNode(9);
+    root->right->right->left = newBNode(4);
+
+    printf("Maximum element is %d \n", findMaxInBinaryTree(root));
+}
+void findMaxPathSuMInBinaryTreeTestData(){
+    struct bnode *root = newBNode(10);
+    root->left = newBNode(2);
+    root->right = newBNode(10);
+    root->left->left = newBNode(20);
+    root->left->right = newBNode(1);
+    root->right->right = newBNode(-25);
+    root->right->right->left = newBNode(3);
+    root->right->right->right = newBNode(4);
+    int res = 0;
+    findMaxPathSuMInBinaryTree(root,&res);
+    printf("%d Max path sum in binary tree ",res);
+
+}
 void binaryTreeTestData()
 {
-    printLevelOrderByLineTestData();
+    
+      findMaxPathSuMInBinaryTreeTestData();
+//    findMaxInBinaryTreeTestData();
+//    removeNodesOfShorterPathLengthTestData();
+//    sumOfAllLeftLeavesTestData();
+//    isFullBinaryTreeTestData();
+//    removeHalfNodesTestData();
+//    printLevelOrderByLineTestData();
 //    convertLeftRightToDownRightTestData();
 //    printSpecificLevelOrderTestData();
 //	findClosestLeafNodeAmongAncestorsAlsoTestData();

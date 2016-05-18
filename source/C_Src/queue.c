@@ -603,7 +603,7 @@ void printKMax(int arr[],int n,int k){
 	for(;i<n;++i){
 		printf("%d ",arr[dq->arr[dq->front]]);//front always contains the largest element.
 		while(!emptyDQ(dq)&&dq->arr[dq->front]<=(i-k)){
-				//if not in the current window.
+				//if not in the current window, remove the element from pop
 				popFront(dq);
 		}
 		while(!emptyDQ(dq)&&arr[i]>=arr[dq->arr[dq->rear]]){
